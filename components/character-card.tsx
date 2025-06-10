@@ -1,13 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import styled, { css, keyframes } from "styled-components"
+import { useState } from "react";
+import Image, { StaticImageData } from "next/image";
+import styled, { css, keyframes } from "styled-components";
+
+interface Character {
+  name: string;
+  image: StaticImageData;
+  quote: string;
+  role: string;
+}
+
+interface CharacterCardProps {
+  character: Character;
+}
+
+export default function CharacterCard({ character }: CharacterCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <CardContainer
+      $isHovered={isHovered}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <GradientOverlay $isHovered={isHovered} />
+
+      <RoleTag>
+        <RoleBadge>{character.role}</RoleBadge>
+      </RoleTag>
+
+      <CharacterImage
+        src={character.image || "/placeholder.svg"}
+        alt={character.name}
+        fill
+        $isHovered={isHovered}
+      />
+
+      <ContentArea>
+        <CharacterName>{character.name}</CharacterName>
+        <CharacterQuote>"{character.quote}"</CharacterQuote>
+      </ContentArea>
+
+      <BorderGlow $isHovered={isHovered} />
+    </CardContainer>
+  );
+}
 
 const cardHover = keyframes`
   0% { transform: translateY(0) scale(1); }
   100% { transform: translateY(-5px) scale(1.02); }
-`
+`;
 
 const CardContainer = styled.div<{ $isHovered: boolean }>`
   position: relative;
@@ -22,20 +65,25 @@ const CardContainer = styled.div<{ $isHovered: boolean }>`
   ${(props) =>
     props.$isHovered &&
     css`
-    border-color: rgba(59, 130, 246, 0.7);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-    animation: ${cardHover} 0.3s ease forwards;
-  `}
-`
+      border-color: rgba(59, 130, 246, 0.7);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      animation: ${cardHover} 0.3s ease forwards;
+    `}
+`;
 
 const GradientOverlay = styled.div<{ $isHovered: boolean }>`
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(30, 58, 138, 0.8) 0%, transparent 50%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(30, 58, 138, 0.8) 0%,
+    transparent 50%,
+    transparent 100%
+  );
   z-index: 10;
   transition: opacity 0.3s ease;
   opacity: ${(props) => (props.$isHovered ? 1 : 0.7)};
-`
+`;
 
 const RoleTag = styled.div`
   position: absolute;
@@ -44,7 +92,7 @@ const RoleTag = styled.div`
   right: 0;
   padding: 1rem;
   z-index: 20;
-`
+`;
 
 const RoleBadge = styled.div`
   display: inline-block;
@@ -54,13 +102,13 @@ const RoleBadge = styled.div`
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
-`
+`;
 
 const CharacterImage = styled(Image)<{ $isHovered: boolean }>`
   object-fit: cover;
   transition: transform 0.5s ease;
-  transform: ${(props) => (props.$isHovered ? "scale(1.05)" : "scale(1)")};
-`
+  transform: ${(props) => (props.$isHovered ? "scale(0.95)" : "scale(0.85)")};
+`;
 
 const ContentArea = styled.div`
   position: absolute;
@@ -69,7 +117,7 @@ const ContentArea = styled.div`
   right: 0;
   padding: 1rem;
   z-index: 20;
-`
+`;
 
 const CharacterName = styled.h3`
   font-size: 1.5rem;
@@ -77,12 +125,12 @@ const CharacterName = styled.h3`
   margin-bottom: 0.5rem;
   color: white;
   text-shadow: 0 0 5px rgba(59, 130, 246, 0.7), 0 0 10px rgba(59, 130, 246, 0.5);
-`
+`;
 
 const CharacterQuote = styled.p`
   color: #bfdbfe;
   font-style: italic;
-`
+`;
 
 const BorderGlow = styled.div<{ $isHovered: boolean }>`
   position: absolute;
@@ -96,45 +144,7 @@ const BorderGlow = styled.div<{ $isHovered: boolean }>`
   ${(props) =>
     props.$isHovered &&
     css`
-    border-color: rgba(59, 130, 246, 0.7);
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-  `}
-`
-
-interface Character {
-  name: string
-  image: string
-  quote: string
-  role: string
-}
-
-interface CharacterCardProps {
-  character: Character
-}
-
-export default function CharacterCard({ character }: CharacterCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
-  return (
-    <CardContainer
-      $isHovered={isHovered}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <GradientOverlay $isHovered={isHovered} />
-
-      <RoleTag>
-        <RoleBadge>{character.role}</RoleBadge>
-      </RoleTag>
-
-      <CharacterImage src={character.image || "/placeholder.svg"} alt={character.name} fill $isHovered={isHovered} />
-
-      <ContentArea>
-        <CharacterName>{character.name}</CharacterName>
-        <CharacterQuote>"{character.quote}"</CharacterQuote>
-      </ContentArea>
-
-      <BorderGlow $isHovered={isHovered} />
-    </CardContainer>
-  )
-}
+      border-color: rgba(59, 130, 246, 0.7);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    `}
+`;

@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import styled, { css } from "styled-components"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import styled, { css } from "styled-components";
+
+import LogoImg from "@/assets/logo2.webp";
 
 const HeaderContainer = styled.header<{ $isScrolled: boolean }>`
   position: fixed;
@@ -11,19 +13,19 @@ const HeaderContainer = styled.header<{ $isScrolled: boolean }>`
   right: 0;
   z-index: 50;
   transition: all 0.3s ease;
-  
+
   ${(props) =>
     props.$isScrolled
       ? css`
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(12px);
-    padding: 0.5rem 0;
-  `
+          background: rgba(0, 0, 0, 0.8);
+          backdrop-filter: blur(12px);
+          padding: 0.5rem 0;
+        `
       : css`
-    background: transparent;
-    padding: 1rem 0;
-  `}
-`
+          background: transparent;
+          padding: 1rem 0;
+        `}
+`;
 
 const Container = styled.div`
   max-width: 1200px;
@@ -36,17 +38,17 @@ const Container = styled.div`
   @media (max-width: 768px) {
     padding: 0 1rem;
   }
-`
+`;
 
 const Logo = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 const LogoImage = styled(Image)`
   height: 2.5rem;
   width: auto;
-`
+`;
 
 const DesktopNav = styled.nav`
   display: flex;
@@ -56,7 +58,7 @@ const DesktopNav = styled.nav`
   @media (max-width: 768px) {
     display: none;
   }
-`
+`;
 
 const NavLink = styled.a`
   color: rgba(255, 255, 255, 0.8);
@@ -69,7 +71,7 @@ const NavLink = styled.a`
     color: #00d4ff;
     text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
   }
-`
+`;
 
 const StartButton = styled.button`
   background: linear-gradient(45deg, #3b82f6, #06b6d4);
@@ -85,7 +87,7 @@ const StartButton = styled.button`
     background: linear-gradient(45deg, #2563eb, #0891b2);
     transform: translateY(-1px);
   }
-`
+`;
 
 const MobileMenuButton = styled.button`
   display: none;
@@ -97,7 +99,7 @@ const MobileMenuButton = styled.button`
   @media (max-width: 768px) {
     display: block;
   }
-`
+`;
 
 const MobileNav = styled.div<{ $isOpen: boolean }>`
   display: none;
@@ -112,7 +114,7 @@ const MobileNav = styled.div<{ $isOpen: boolean }>`
   @media (max-width: 768px) {
     display: ${(props) => (props.$isOpen ? "block" : "none")};
   }
-`
+`;
 
 const MobileNavContent = styled.nav`
   max-width: 1200px;
@@ -121,7 +123,7 @@ const MobileNavContent = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`
+`;
 
 const MobileNavLink = styled.a`
   color: rgba(255, 255, 255, 0.8);
@@ -133,7 +135,7 @@ const MobileNavLink = styled.a`
   &:hover {
     color: #00d4ff;
   }
-`
+`;
 
 const MobileStartButton = styled.button`
   background: linear-gradient(45deg, #3b82f6, #06b6d4);
@@ -149,44 +151,69 @@ const MobileStartButton = styled.button`
   &:hover {
     background: linear-gradient(45deg, #2563eb, #0891b2);
   }
-`
+`;
 
 export default function NavBar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+      setIsScrolled(window.scrollY > 10);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <HeaderContainer $isScrolled={isScrolled}>
       <Container>
         <Logo>
-          <LogoImage src="/placeholder.svg?height=40&width=150" alt="Blue Archive" width={150} height={40} />
+          <LogoImage src={LogoImg} alt="Blue Archive" width={50} height={50} />
         </Logo>
 
         <DesktopNav>
-          <NavLink href="#">홈</NavLink>
-          <NavLink href="#">캐릭터</NavLink>
-          <NavLink href="#">갤러리</NavLink>
-          <NavLink href="#">뉴스</NavLink>
-          <StartButton>게임 시작</StartButton>
+          <NavLink href="#section1">홈</NavLink>
+          <NavLink href="#section2">학원</NavLink>
+          <NavLink href="#section3">갤러리</NavLink>
+          <NavLink href="#section4">컬렉션</NavLink>
+          <NavLink href="#section5">하이라이트</NavLink>
+          {/* <StartButton>게임 시작</StartButton> */}
         </DesktopNav>
 
-        <MobileMenuButton onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <MobileMenuButton
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
           {isMobileMenuOpen ? (
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           ) : (
-            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           )}
         </MobileMenuButton>
@@ -194,21 +221,38 @@ export default function NavBar() {
 
       <MobileNav $isOpen={isMobileMenuOpen}>
         <MobileNavContent>
-          <MobileNavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
+          <MobileNavLink
+            href="#section1"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             홈
           </MobileNavLink>
-          <MobileNavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
-            캐릭터
+          <MobileNavLink
+            href="#section2"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            학원
           </MobileNavLink>
-          <MobileNavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
+          <MobileNavLink
+            href="#section3"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             갤러리
           </MobileNavLink>
-          <MobileNavLink href="#" onClick={() => setIsMobileMenuOpen(false)}>
-            뉴스
+          <MobileNavLink
+            href="#section4"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            컬렉션
           </MobileNavLink>
-          <MobileStartButton onClick={() => setIsMobileMenuOpen(false)}>게임 시작</MobileStartButton>
+          <MobileNavLink
+            href="#section5"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            하이라이트
+          </MobileNavLink>
         </MobileNavContent>
       </MobileNav>
     </HeaderContainer>
-  )
+  );
 }

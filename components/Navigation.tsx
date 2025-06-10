@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import styled from "styled-components"
+import { useState, useEffect } from "react";
+import styled from "styled-components";
 
 const NavContainer = styled.nav<{ $isScrolled: boolean }>`
   position: fixed;
@@ -10,15 +10,17 @@ const NavContainer = styled.nav<{ $isScrolled: boolean }>`
   right: 0;
   z-index: 1000;
   padding: 1rem 2rem;
-  background: ${(props) => (props.$isScrolled ? "rgba(0, 0, 0, 0.9)" : "transparent")};
+  background: ${(props) =>
+    props.$isScrolled ? "rgba(0, 0, 0, 0.9)" : "transparent"};
   backdrop-filter: ${(props) => (props.$isScrolled ? "blur(10px)" : "none")};
-  border-bottom: ${(props) => (props.$isScrolled ? "1px solid rgba(0, 149, 255, 0.3)" : "none")};
+  border-bottom: ${(props) =>
+    props.$isScrolled ? "1px solid rgba(0, 149, 255, 0.3)" : "none"};
   transition: all 0.3s ease;
 
   @media (max-width: 768px) {
     padding: 1rem;
   }
-`
+`;
 
 const NavContent = styled.div`
   display: flex;
@@ -26,14 +28,14 @@ const NavContent = styled.div`
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-`
+`;
 
 const Logo = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   color: #0095ff;
   text-shadow: 0 0 10px rgba(0, 149, 255, 0.5);
-`
+`;
 
 const NavLinks = styled.div`
   display: flex;
@@ -43,7 +45,7 @@ const NavLinks = styled.div`
   @media (max-width: 768px) {
     display: none;
   }
-`
+`;
 
 const NavLink = styled.a`
   color: rgba(255, 255, 255, 0.8);
@@ -58,7 +60,7 @@ const NavLink = styled.a`
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -5px;
     left: 0;
@@ -71,7 +73,7 @@ const NavLink = styled.a`
   &:hover::after {
     width: 100%;
   }
-`
+`;
 
 const StartButton = styled.button`
   background: linear-gradient(45deg, #0095ff, #00d4ff);
@@ -92,32 +94,33 @@ const StartButton = styled.button`
   &:active {
     transform: translateY(0);
   }
-`
+`;
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
+      setIsScrolled(window.scrollY > 50);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <NavContainer $isScrolled={isScrolled}>
       <NavContent>
         <Logo>BLUE ARCHIVE</Logo>
         <NavLinks>
-          <NavLink href="#home">홈</NavLink>
-          <NavLink href="#characters">캐릭터</NavLink>
-          <NavLink href="#gallery">갤러리</NavLink>
-          <NavLink href="#news">뉴스</NavLink>
-          <StartButton>게임 시작</StartButton>
+          <NavLink href="#section1">홈</NavLink>
+          <NavLink href="#section2">캐릭터</NavLink>
+          <NavLink href="#section3">갤러리</NavLink>
+          <NavLink href="#section4">컬렉션</NavLink>
+          {/* <NavLink href="#news">뉴스</NavLink> */}
+          {/* <StartButton>게임 시작</StartButton> */}
         </NavLinks>
       </NavContent>
     </NavContainer>
-  )
+  );
 }
