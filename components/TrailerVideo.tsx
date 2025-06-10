@@ -5,55 +5,64 @@ import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
 
 export default function TrailerVideo() {
+  const [isFocusIn, setIsFocusIn] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isRotate, setIsRotate] = useState(false);
 
-  useIntersectionObserver(videoRef, 0.4, {
-    isEnter: () => {
-      const el = document.getElementById("section5");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    },
-  });
+  const refSection5 = () => {
+    const el = document.getElementById("section5");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
-  useIntersectionObserver(videoRef, 0.8, {
+  // useIntersectionObserver(videoRef, 0.5, {
+  //   isEnter: () => {
+  //     refSection5();
+  //     setIsFocusIn(true);
+  //     videoRef?.current?.play();
+  //   },
+  // });
+
+  useIntersectionObserver(videoRef, 0.6, {
     isEnter: () => {
+      refSection5();
+      setIsFocusIn(true);
       videoRef?.current?.play();
     },
     elseFunc: () => {
       videoRef?.current?.pause();
+      setIsFocusIn(false);
     },
   });
 
   const handlerEvent = (flag: boolean) => {
-    const body = document.body;
-    const html = document.documentElement;
-    videoRef?.current?.play();
+    console.log("flag", flag);
     if (flag) {
-      // 가로 모드: 스크롤 막고 비디오 풀스크린
-      body.style.overflow = "hidden";
-      html.style.overflow = "hidden";
       setIsRotate(true);
     } else {
-      // 세로 모드: 원복
-      body.style.overflow = "";
-      html.style.overflow = "";
       setIsRotate(false);
     }
   };
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+    if (!isMobile || !isFocusIn) return;
+
     const handleResize = () => {
       const isLandscape = window.innerWidth > window.innerHeight;
+
+      refSection5();
       handlerEvent(isLandscape);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // 초기 실행
+    handleResize(); // 초기에만 실행 (isFocusIn이 true일 때)
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isFocusIn]);
 
   return (
     <Layout id="section5" $isRotate={isRotate}>
@@ -91,17 +100,17 @@ export default function TrailerVideo() {
 const Layout = styled.section<{ $isRotate: boolean }>`
   position: relative;
   display: flex;
+  align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 150vh;
   z-index: 1;
   ${({ $isRotate }) =>
     $isRotate &&
     css`
-      position: fixed;
+      /* position: fixed;
       top: 0;
-      left: 0;
+      left: 0; */
       width: 100vw;
-      height: 100vh;
       z-index: 9999;
       background: black;
 
@@ -111,6 +120,10 @@ const Layout = styled.section<{ $isRotate: boolean }>`
         height: 100vh;
       }
     `}
+
+  @media (max-width: 430px) {
+    height: 70vh;
+  }
 `;
 
 const BackgroundLayout = styled.div<{ $isRotate: boolean }>`
@@ -125,7 +138,7 @@ const BackgroundLayout = styled.div<{ $isRotate: boolean }>`
 
 const Button = styled.div<{ $isRotate: boolean }>`
   position: absolute;
-  top: ${({ $isRotate }) => ($isRotate ? "32%" : "2em")};
+  top: ${({ $isRotate }) => ($isRotate ? "25%" : "2em")};
   right: 1em;
   border-radius: 0.5em;
   border: 0.15em solid rgba(255, 255, 255, 0.35);
