@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Blue archive!",
     description: "학원, 학생, 그리고 당신의. 기적 같은 이야기. 기적 같은 일상",
-    url: "/shiroko.jpeg",
+    url: "/",
     type: "website",
     images: [
       {
-        url: "",
-        alt: "pantasia - image",
+        url: "/shiroko.jpeg",
+        alt: "image",
       },
     ],
   },
