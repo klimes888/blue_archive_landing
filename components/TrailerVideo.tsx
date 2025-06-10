@@ -89,10 +89,17 @@ export default function TrailerVideo() {
         </svg>
       </Button>
       <BackgroundLayout $isRotate={isRotate} />
-      <video ref={videoRef} controls={false} autoPlay loop muted playsInline>
+      <VideoWrap
+        ref={videoRef}
+        controls={false}
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
         <source src="/bluearch_pv6.mp4" type="video/mp4" />
         브라우저가 video 태그를 지원하지 않습니다.
-      </video>
+      </VideoWrap>
     </Layout>
   );
 }
@@ -110,20 +117,21 @@ const Layout = styled.section<{ $isRotate: boolean }>`
       /* position: fixed;
       top: 0;
       left: 0; */
-      width: 100vw;
       z-index: 9999;
-      background: black;
 
       video {
         object-fit: cover;
-        width: 100vw;
-        height: 100vh;
       }
     `}
 
   @media (max-width: 430px) {
     height: 70vh;
   }
+`;
+
+const VideoWrap = styled.video`
+  width: 100vw;
+  height: 100vh;
 `;
 
 const BackgroundLayout = styled.div<{ $isRotate: boolean }>`
@@ -138,7 +146,7 @@ const BackgroundLayout = styled.div<{ $isRotate: boolean }>`
 
 const Button = styled.div<{ $isRotate: boolean }>`
   position: absolute;
-  top: ${({ $isRotate }) => ($isRotate ? "25%" : "2em")};
+  top: 26%;
   right: 1em;
   border-radius: 0.5em;
   border: 0.15em solid rgba(255, 255, 255, 0.35);
@@ -151,4 +159,12 @@ const Button = styled.div<{ $isRotate: boolean }>`
     border: 0.2em solid rgba(255, 255, 255, 0.5);
   }
   z-index: 99;
+
+  @media (max-width: 850px) {
+    top: 22%;
+  }
+
+  @media (max-width: 430px) {
+    top: 28%;
+  }
 `;
