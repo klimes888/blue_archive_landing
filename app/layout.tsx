@@ -4,7 +4,7 @@ import StyledComponentsRegistry from "@/lib/registry";
 
 export const metadata: Metadata = {
   title: "Blue archive!",
-  description: "Pantasia | 나만의 설정집 나만의 세계관을 창조해보세요",
+  description: "학원, 학생, 그리고 당신의. 기적 같은 이야기. 기적 같은 일상",
   openGraph: {
     title: "Blue archive!",
     description: "학원, 학생, 그리고 당신의. 기적 같은 이야기. 기적 같은 일상",
