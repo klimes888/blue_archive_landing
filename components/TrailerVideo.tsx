@@ -3,7 +3,7 @@
 import { useIntersectionObserver } from "@/hooks/use-intersectionObserver";
 import { useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-
+import { Fullscreen } from "lucide-react";
 export default function TrailerVideo() {
   const [isFocusIn, setIsFocusIn] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -15,14 +15,6 @@ export default function TrailerVideo() {
       el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
-
-  // useIntersectionObserver(videoRef, 0.5, {
-  //   isEnter: () => {
-  //     refSection5();
-  //     setIsFocusIn(true);
-  //     videoRef?.current?.play();
-  //   },
-  // });
 
   useIntersectionObserver(videoRef, 0.6, {
     isEnter: () => {
@@ -42,6 +34,15 @@ export default function TrailerVideo() {
       setIsRotate(true);
     } else {
       setIsRotate(false);
+    }
+  };
+
+  const fullWidthScreen = async () => {
+    if (videoRef.current) {
+      await videoRef.current.requestFullscreen();
+      if (screen.orientation) {
+        await screen.orientation?.lock("landscape");
+      }
     }
   };
 
@@ -68,25 +69,11 @@ export default function TrailerVideo() {
     <Layout id="section5" $isRotate={isRotate}>
       <Button
         $isRotate={!isRotate}
-        onClick={() => {
-          setIsRotate(!isRotate);
-          handlerEvent(!isRotate);
+        onClick={async () => {
+          await fullWidthScreen();
         }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="1 4 1 10 7 10"></polyline>
-          <path d="M3.51 15a9 9 0 1 0 .49-5.5L1 10"></path>
-        </svg>
+        <Fullscreen size={16} color="rgba(255, 255, 255, 0.8)" />
       </Button>
       <BackgroundLayout $isRotate={isRotate} />
       <VideoWrap
@@ -131,7 +118,7 @@ const Layout = styled.section<{ $isRotate: boolean }>`
 
 const VideoWrap = styled.video`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 `;
 
 const BackgroundLayout = styled.div<{ $isRotate: boolean }>`

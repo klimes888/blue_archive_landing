@@ -224,7 +224,7 @@ const ButtonWrap = styled.div<{ $isColl: boolean }>`
   flex-direction: column;
   width: 100%;
   height: ${({ $isColl }) => ($isColl ? "10em" : "auto")};
-
+  z-index: 9;
   @media (max-width: 430px) {
     display: flex;
   }
@@ -253,6 +253,7 @@ const Button = styled.button`
   border: 2px solid transparent;
   padding: 0.4em 1em;
   border-radius: 0.45em;
+  z-index: 1;
   &::before {
     content: "";
     position: absolute;

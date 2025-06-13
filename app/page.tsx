@@ -1,10 +1,9 @@
 "use client";
 import type React from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import NavBar from "@/components/nav-bar";
 import HeroSection from "@/components/hero-section";
 import CharacterSection from "@/components/character-section";
-import VideoSection from "@/components/video-section";
 import Footer from "@/components/footer";
 import GlobalStyles from "@/components/global-styles";
 import TrailerVideo from "@/components/TrailerVideo";

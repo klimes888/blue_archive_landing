@@ -1,6 +1,5 @@
 "use client";
 import React, { MouseEvent, useEffect, useState } from "react";
-import Image from "next/image";
 import styled, { keyframes } from "styled-components";
 import ParticleBackground from "./particle-background";
 
@@ -18,7 +17,6 @@ export default function HeroSection() {
       <ParticleBackground />
       <BackgroundOverlay />
       <HexGrid className="hex-grid" />
-
       <GradientBottom />
       <MoveCharacter ref={ref} />
       <Container>
@@ -80,8 +78,9 @@ const Container = styled.div`
   text-align: center;
   padding: 0 1rem;
   margin: 0 auto;
-  @media (max-width: 430px) {
+  @media (max-width: 420px) {
     display: flex;
+    bottom: 4em;
   }
 `;
 
